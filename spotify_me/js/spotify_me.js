@@ -9,13 +9,17 @@ $(document).ready(function(){
 
   function search(e){
     e.preventDefault();
-    var url = "https://api.spotify.com/v1/search?q="+ searchString.val() + "&type=" + searchType.val();
+    var searchString = $("#search-string").val();
+    var searchType = $("#search-type").val();
+    resultType = searchType + "s";
+
+    var url = "https://api.spotify.com/v1/search?q="+ searchString + "&type=" + searchType;
+
     $.get(url, function(response){
-      console.log(response);
-      $.each(response.artists.items, function(index, artist){
-        var result = $("<div class='results'>" + artist.name + "</div>");
+      results.empty();
+      $.each(response[resultType].items, function(index, resultType){
+        var result = $("<div class='results'>" + resultType.name + "</div>");
         results.append(result);
-        console.log(artist.name);
       })
     })
   }

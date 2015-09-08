@@ -27,7 +27,7 @@ $(document).ready(function(){
     $.get(url, function(response){
       resultsDisplay.empty();
       $.each(response[results].items, function(index, resultType){
-        var result = $("<div class='result'>" + resultType.name + "</div>");
+        var result = $("<div class='result'><a href=''>" + resultType.name + "</a></div>");
         resultsDisplay.append(result);
         if (resultType.type === "track") {
           var track = $("<audio src='" + resultType.preview_url + "' preload='auto' controls>" +resultType.name + "</audio>");

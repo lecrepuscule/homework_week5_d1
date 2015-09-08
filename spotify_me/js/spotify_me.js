@@ -58,7 +58,7 @@ $(document).ready(function(){
 
       var artImage = ((resultType.type === "track") ? resultType.album.images[0].url : resultType.images[0].url);
 
-      var artwork = $("<img src='" + artImage + "'>");
+      var artwork = $("<img class='artwork' src='" + artImage + "'>");
       resultsDisplay.append(result);
       resultsDisplay.append(artwork);
 

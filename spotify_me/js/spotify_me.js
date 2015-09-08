@@ -53,8 +53,12 @@ $(document).ready(function(){
     resultsDisplay.empty();
 
     $.each(response[results].items, function(index, resultType){
+
       var result = $("<div class='result'><a href=''>" + resultType.name + "</a></div>");
-      var artwork = $("<img src='" + resultType.images[0].url + "'>");
+
+      var artImage = ((resultType.type === "track") ? resultType.album.images[0].url : resultType.images[0].url);
+
+      var artwork = $("<img src='" + artImage + "'>");
       resultsDisplay.append(result);
       resultsDisplay.append(artwork);
 

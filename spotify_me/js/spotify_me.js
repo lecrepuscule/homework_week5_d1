@@ -23,7 +23,7 @@ $(document).ready(function(){
 
     var url = "https://api.spotify.com/v1/search?q="+ searchString + "&type=" + searchType;
 
-    $.get(url, function(response){
+    var jqxhr = $.get(url, function(response){
       render (response, results);
     })
 
@@ -50,12 +50,13 @@ $(document).ready(function(){
 
   function render (response, results){
     var resultsDisplay = $(".results-display");
-    var audioResults = $(".audio-results");
     resultsDisplay.empty();
 
     $.each(response[results].items, function(index, resultType){
       var result = $("<div class='result'><a href=''>" + resultType.name + "</a></div>");
+      var artwork = $("<img src='" + resultType.images[0].url + "'>");
       resultsDisplay.append(result);
+      resultsDisplay.append(artwork);
 
       if (resultType.type === "track") {
         var track = $("<audio src='" + resultType.preview_url + "' preload='auto' controls>" +resultType.name + "</audio>");

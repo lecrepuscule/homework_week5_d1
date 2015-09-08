@@ -7,12 +7,20 @@ $(document).ready(function(){
   var audioResults = $(".audio-results");
 
   submitButton.on("click", search);
+  $("body").on("click", ".result", search);
 
   function search(e){
     e.preventDefault();
-    var searchString = $("#search-string").val();
-    var searchType = $("#search-type").val();
+
+    if (e.target === submitButton[0]){
+      var searchString = $("#search-string").val();
+      var searchType = $("#search-type").val();
+    } else {
+      var searchString = e.target.innerHTML;
+      var searchType = "track";
+    }
     results = searchType + "s";
+
 
     var url = "https://api.spotify.com/v1/search?q="+ searchString + "&type=" + searchType;
 
@@ -24,8 +32,7 @@ $(document).ready(function(){
         if (resultType.type === "track") {
           var track = $("<audio src='" + resultType.preview_url + "' preload='auto' controls>" +resultType.name + "</audio>");
           resultsDisplay.append(track);
-        }
-       
+        }      
       })
     })
 

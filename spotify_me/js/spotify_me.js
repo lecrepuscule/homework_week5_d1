@@ -3,8 +3,6 @@ $(document).ready(function(){
   var submitButton = $("#submit-button");
   var searchString = $("#search-string");
   var searchType = $("#search-type");
-  var resultsDisplay = $(".results-display");
-  var audioResults = $(".audio-results");
 
   submitButton.on("click", search);
   $("body").on("click", ".result", search);
@@ -19,21 +17,14 @@ $(document).ready(function(){
       var searchString = e.target.innerHTML;
       var searchType = "track";
     }
-    results = searchType + "s";
+
+    var results = searchType + "s";
 
 
     var url = "https://api.spotify.com/v1/search?q="+ searchString + "&type=" + searchType;
 
     $.get(url, function(response){
-      resultsDisplay.empty();
-      $.each(response[results].items, function(index, resultType){
-        var result = $("<div class='result'><a href=''>" + resultType.name + "</a></div>");
-        resultsDisplay.append(result);
-        if (resultType.type === "track") {
-          var track = $("<audio src='" + resultType.preview_url + "' preload='auto' controls>" +resultType.name + "</audio>");
-          resultsDisplay.append(track);
-        }      
-      })
+      render (response, results);
     })
 
     // $.ajax({
@@ -55,6 +46,22 @@ $(document).ready(function(){
     //     })
     //   }
     // });    
+  }
+
+  function render (response, results){
+    var resultsDisplay = $(".results-display");
+    var audioResults = $(".audio-results");
+    resultsDisplay.empty();
+
+    $.each(response[results].items, function(index, resultType){
+      var result = $("<div class='result'><a href=''>" + resultType.name + "</a></div>");
+      resultsDisplay.append(result);
+
+      if (resultType.type === "track") {
+        var track = $("<audio src='" + resultType.preview_url + "' preload='auto' controls>" +resultType.name + "</audio>");
+        resultsDisplay.append(track);
+      }      
+    })
   }
 
 })
